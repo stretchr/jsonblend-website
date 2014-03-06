@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Json Blend</title>
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+	<a href="https://github.com/stretchr/jsonblend"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://github-camo.global.ssl.fastly.net/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-12">
+				<h1>JSON Blend</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, excepturi temporibus fuga quo debitis amet eos! Enim, deserunt dignissimos at nobis cumque dolorum temporibus maiores mollitia explicabo iure quibusdam totam.</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<form id="post-json">
+					<div id="error"></div>
+					<div class="form-group">
+						<div id="json">
+[
+{"<<":{"grandpa":{"parent":{"child":{"first":"Tyler"}}}}},
+{"<<":{"grandpa":{"parent":{"child":{"second":"Ryan"}}}}},
+{"<<":{"grandpa":{"parent":{"child":{"third":"Mat"}}}}}
+]
+						</div>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-primary" type="submit">Blend JSON</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-sm-6">
+				<div id="results">
+					Run your code on the right, press blend and your results go here.
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<h2>Examples</h2>
+				<table class="table table-striped">
+					<tr>
+						<th>Operation</th>
+						<th>Description</th>
+						<th>Example</th>
+					</tr>
+					<tr>
+						<td><code>^</code></td>
+						<td><strong>Direct Merge:</strong> Merges at the top level key by key</td>
+						<td>
+						<pre><code id="direct-merge">
+[
+{"^": {"contact": {"address1": "123 Fake Street"}}},
+{"^": {"contact": {"address2": "Unit 1D"}}}
+]
+						</code></pre>
+						<a class="merge btn btn-sm btn-primary" data-example="direct-merge">Blend</a>
+						</td>
+					</tr>
+					<tr>
+						<td><code><</code></td>
+						<td><strong>Shallow Merge:</strong> Merges all keys one level deep</td>
+						<td>
+						<pre><code id="shallow-merge">
+[
+{"<": {"contact": {"address1": "123 Fake Street"}}},
+{"<": {"contact": {"address2": "Unit 1D"}}}
+]
+						</code></pre>
+						<a class="merge btn btn-sm btn-primary" data-example="shallow-merge">Blend</a>
+						</td>
+					</tr>
+					<tr>
+						<td><code><<</code></td>
+						<td><strong>Deep Merge:</strong> Merges all keys at all levels. Overwrites strings with duplicate keys.</td>
+						<td>
+						<pre><code id="deep-merge">
+[
+{"<<": {"contact": {"zip": {"second":"12345"}}}},
+{"<<": {"contact": {"zip": {"first": "80024"}}}}
+]
+						</code></pre>
+						<a class="merge btn btn-sm btn-primary" data-example="deep-merge">Blend</a>
+						</td>
+					</tr>
+					<tr>
+						<td><code>+</code></td>
+						<td><strong>Build Array:</strong> Builds an array from duplicate keys.</td>
+						<td>
+						<pre><code id="build-array">
+[
+{"+": {"name": {"item":"one"}}},
+{"+": {"name": {"item":"two"}}},
+{"+": {"name": {"item":"three"}}}
+]
+						</code></pre>
+						<a class="merge btn btn-sm btn-primary" data-example="build-array">Blend</a>
+						</td>
+					</tr>
+					<tr>
+						<td><code>+?</code></td>
+						<td><strong>Build Unique Array:</strong> Builds an array from duplicate keys.  Only keeps unique values in the array.</td>
+						<td>
+						<pre><code id="build-unique-array">
+[
+{"+?": {"name": "one"}},
+{"+?": {"name": "two"}},
+{"+?": {"name": "one"}},
+{"+?": {"name": "three"}},
+{"+?": {"name": "one"}}
+]
+						</code></pre>
+						<a class="merge btn btn-sm btn-primary" data-example="build-unique-array">Blend</a>
+						</td>
+					</tr>
+					<tr>
+						<td><code>-</code></td>
+						<td><strong>Remove from Array:</strong> Removes the item from the array if it exists.</td>
+						<td>
+						<pre><code id="remove-array">
+[
+{"+": {"name": {"item":"one"}}},
+{"+": {"name": {"item":"two"}}},
+{"+": {"name": {"item":"three"}}},
+{"-": {"name": {"item":"two"}}}
+]
+						</code></pre>
+						<a class="merge btn btn-sm btn-primary" data-example="remove-array">Blend</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12"><div id="footer">
+				<p>Made by <a href="http://www.stretchr.com">Stretchr</a>.</p>
+			</div></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/services/ace.min.js"></script>
+	<script type="text/javascript" src="js/application.js"></script>
+</body>
+</html>

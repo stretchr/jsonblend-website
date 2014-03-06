@@ -1,0 +1,42 @@
+textarea.json-field {
+	height:12em;
+}
+
+pre.response {
+	background:transparent;
+	border:none;
+}
+
+ #json {
+    position: relative;
+    width: 500px;
+    height: 400px;
+}
+
+/* ----- Examples -----*/
+
+td:first-child {
+	text-align:center;
+	font-size:25px;
+	font-weight:bolder;
+}
+
+#results {
+	padding:20px;
+	border: 3px dashed #e8e8e8;
+}
+
+.merge {
+	float:right;
+}
+/* ------ Footer -----*/
+
+#footer {
+	text-align:right;
+	padding:20px 0;
+}
+
+#footer a {
+	color:#000;
+	font-weight:bold;
+}

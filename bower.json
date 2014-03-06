@@ -1,0 +1,27 @@
+{
+  "name": "JSON Blend",
+  "version": "0.0.0",
+  "authors": [
+    "Tyler <tyler@stretchr.com>"
+  ],
+  "description": "JSON Blend as a service",
+  "main": "index.html",
+  "keywords": [
+    "json"
+  ],
+  "license": "MIT",
+  "homepage": "https://jsonblend.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+
+  "dependencies" : {
+    "bootstrap" : "~3.1.1",
+    "ace" : "~1.1"
+  }
+}
