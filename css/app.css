@@ -10,7 +10,7 @@ pre.response {
  #json {
     position: relative;
     width: 500px;
-    height: 400px;
+    height: 150px;
 }
 
 /* ----- Examples -----*/
@@ -19,6 +19,10 @@ td:first-child {
 	text-align:center;
 	font-size:25px;
 	font-weight:bolder;
+}
+
+th#description {
+	width: 45%
 }
 
 #results {

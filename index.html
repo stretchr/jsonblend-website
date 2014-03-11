@@ -15,7 +15,10 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, excepturi temporibus fuga quo debitis amet eos! Enim, deserunt dignissimos at nobis cumque dolorum temporibus maiores mollitia explicabo iure quibusdam totam.</p>
+				<p>
+				JSON Blend is a framework implementing a set of operations and behaviors to provide powerful merging and blending of JSON objects.
+				Please see below for a description of all the operators and the operations they represent.
+				</p>
 			</div>
 		</div>
 		<div class="row">
@@ -23,44 +26,43 @@
 				<form id="post-json">
 					<div id="error"></div>
 					<div class="form-group">
-						<div id="json">
-[
-{"<<":{"grandpa":{"parent":{"child":{"first":"Tyler"}}}}},
-{"<<":{"grandpa":{"parent":{"child":{"second":"Ryan"}}}}},
-{"<<":{"grandpa":{"parent":{"child":{"third":"Mat"}}}}}
-]
-						</div>
+						<div id="json">[
+  {"<<":{"op":{"read":{"perm":{"+":{"$and":"active=true"}}}}}},
+  {"<<":{"op":{"read":{"perm":{"+":{"$and":"isOwner=true"}}}}}},
+  {"<<":{"op":{"read":{"perm":{"$or":"isAdmin=true"}}}}},
+  {"^":{"callback":"https://jsonblend.com/callback"}}
+]</div>
 					</div>
 					<div class="form-group">
-						<button class="btn btn-primary" type="submit">Blend JSON</button>
+						<button class="btn btn-primary" type="submit">Blend</button>
 					</div>
 				</form>
 			</div>
 			<div class="col-sm-6">
 				<div id="results">
-					Run your code on the right, press blend and your results go here.
+					Click "Blend" to blend the array of json objects into a single map.
 				</div>
 			</div>
 		</div>
+		<p>All examples are powered by a simple Go webserver implementing jsonblend at https://jsonblend.com/blend.</p>
+		<p>Feel free to POST your blend requests to the endpoint anytime! We don't log your data.</p>
 		<div class="row">
 			<div class="col-sm-12">
 				<h2>Examples</h2>
 				<table class="table table-striped">
 					<tr>
-						<th>Operation</th>
-						<th>Description</th>
-						<th>Example</th>
+						<th id="operation">Operation</th>
+						<th id="description">Description</th>
+						<th id="example">Example</th>
 					</tr>
 					<tr>
 						<td><code>^</code></td>
 						<td><strong>Direct Merge:</strong> Merges at the top level key by key</td>
 						<td>
-						<pre><code id="direct-merge">
-[
-{"^": {"contact": {"address1": "123 Fake Street"}}},
-{"^": {"contact": {"address2": "Unit 1D"}}}
-]
-						</code></pre>
+						<pre><code id="direct-merge">[
+  {"^": {"contact": {"address1": "123 Fake Street"}}},
+  {"^": {"contact": {"address2": "Unit 1D"}}}
+]</code></pre>
 						<a class="merge btn btn-sm btn-primary" data-example="direct-merge">Blend</a>
 						</td>
 					</tr>
@@ -68,12 +70,10 @@
 						<td><code><</code></td>
 						<td><strong>Shallow Merge:</strong> Merges all keys one level deep</td>
 						<td>
-						<pre><code id="shallow-merge">
-[
-{"<": {"contact": {"address1": "123 Fake Street"}}},
-{"<": {"contact": {"address2": "Unit 1D"}}}
-]
-						</code></pre>
+						<pre><code id="shallow-merge">[
+  {"<": {"contact": {"address1": "123 Fake Street"}}},
+  {"<": {"contact": {"address2": "Unit 1D"}}}
+]</code></pre>
 						<a class="merge btn btn-sm btn-primary" data-example="shallow-merge">Blend</a>
 						</td>
 					</tr>
@@ -81,12 +81,10 @@
 						<td><code><<</code></td>
 						<td><strong>Deep Merge:</strong> Merges all keys at all levels. Overwrites strings with duplicate keys.</td>
 						<td>
-						<pre><code id="deep-merge">
-[
-{"<<": {"contact": {"zip": {"second":"12345"}}}},
-{"<<": {"contact": {"zip": {"first": "80024"}}}}
-]
-						</code></pre>
+						<pre><code id="deep-merge">[
+  {"<<": {"contact": {"zip": {"second":"12345"}}}},
+  {"<<": {"contact": {"zip": {"first": "80024"}}}}
+]</code></pre>
 						<a class="merge btn btn-sm btn-primary" data-example="deep-merge">Blend</a>
 						</td>
 					</tr>
@@ -94,13 +92,11 @@
 						<td><code>+</code></td>
 						<td><strong>Build Array:</strong> Builds an array from duplicate keys.</td>
 						<td>
-						<pre><code id="build-array">
-[
-{"+": {"name": {"item":"one"}}},
-{"+": {"name": {"item":"two"}}},
-{"+": {"name": {"item":"three"}}}
-]
-						</code></pre>
+						<pre><code id="build-array">[
+  {"+": {"name": {"item":"one"}}},
+  {"+": {"name": {"item":"two"}}},
+  {"+": {"name": {"item":"three"}}}
+]</code></pre>
 						<a class="merge btn btn-sm btn-primary" data-example="build-array">Blend</a>
 						</td>
 					</tr>
@@ -108,15 +104,12 @@
 						<td><code>+?</code></td>
 						<td><strong>Build Unique Array:</strong> Builds an array from duplicate keys.  Only keeps unique values in the array.</td>
 						<td>
-						<pre><code id="build-unique-array">
-[
-{"+?": {"name": "one"}},
-{"+?": {"name": "two"}},
-{"+?": {"name": "one"}},
-{"+?": {"name": "three"}},
-{"+?": {"name": "one"}}
-]
-						</code></pre>
+						<pre><code id="build-unique-array">[
+  {"+?": {"name": "one"}},
+  {"+?": {"name": "two"}},
+  {"+?": {"name": "one"}},
+  {"+?": {"name": "three"}}
+]</code></pre>
 						<a class="merge btn btn-sm btn-primary" data-example="build-unique-array">Blend</a>
 						</td>
 					</tr>
@@ -124,14 +117,12 @@
 						<td><code>-</code></td>
 						<td><strong>Remove from Array:</strong> Removes the item from the array if it exists.</td>
 						<td>
-						<pre><code id="remove-array">
-[
-{"+": {"name": {"item":"one"}}},
-{"+": {"name": {"item":"two"}}},
-{"+": {"name": {"item":"three"}}},
-{"-": {"name": {"item":"two"}}}
-]
-						</code></pre>
+						<pre><code id="remove-array">[
+  {"+": {"name": {"item":"one"}}},
+  {"+": {"name": {"item":"two"}}},
+  {"+": {"name": {"item":"three"}}},
+  {"-": {"name": {"item":"two"}}}
+]</code></pre>
 						<a class="merge btn btn-sm btn-primary" data-example="remove-array">Blend</a>
 						</td>
 					</tr>
@@ -139,8 +130,19 @@
 			</div>
 		</div>
 		<div class="row">
+			<div class="col-sm-12">
+				<h2>Open Source</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<p>The JSON Blend framework and specification was created to meet the internal needs of <a href="http://www.stretchr.com">Stretchr</a>. We have open sourced it in the hope that it will be useful to others and we intend to create more implementations in various languages.</p>
+				<p>If you would like to contribute, please feel free to work with us on the <a href="http://github.com/stretchr/jsonblend">jsonblend</a> GitHub repository, or start your own repo implementing the spec for another language and we will link it here.</p>
+			</div>
+		</div>
+		<div class="row">
 			<div class="col-sm-12"><div id="footer">
-				<p>Made by <a href="http://www.stretchr.com">Stretchr</a>.</p>
+				<p>Built by <a href="http://www.stretchr.com">Stretchr</a>.</p>
 			</div></div>
 		</div>
 	</div>
